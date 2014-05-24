@@ -22,16 +22,16 @@ return array(
 
 		'gii'=>array(
 			'class'=>'system.gii.GiiModule',
-			'password'=>'Enter Your Password Here',
+			'password'=>'joincic777',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
-			'ipFilters'=>array('127.0.0.1','::1'),
+			'ipFilters'=>array('127.0.0.1','*'),
 		),
 
 	),
 
 	// application components
 	'components'=>
-		CMap::mergeArray( include(dirname(__FILE__).'/database.php'),array(
+		CMap::mergeArray( include(dirname(__FILE__).'/databases.php'),array(
 				'user'=>array(
 					// enable cookie-based authentication
 					'allowAutoLogin'=>true,

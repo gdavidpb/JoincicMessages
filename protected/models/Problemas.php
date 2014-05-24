@@ -1,0 +1,109 @@
+<?php
+
+/**
+ * This is the model class for table "problemas".
+ *
+ * The followings are the available columns in table 'problemas':
+ * @property integer $id
+ * @property string $titulo
+ * @property string $enunciado
+ * @property string $entradas
+ * @property string $salidas
+ * @property string $fin_de_entrega
+ * @property string $updated_at
+ */
+class Problemas extends CActiveRecord
+{
+	/**
+	 * @return string the associated database table name
+	 */
+	public function tableName()
+	{
+		return 'problemas';
+	}
+
+	/**
+	 * @return array validation rules for model attributes.
+	 */
+	public function rules()
+	{
+		// NOTE: you should only define rules for those attributes that
+		// will receive user inputs.
+		return array(
+			array('titulo', 'length', 'max'=>255),
+			array('enunciado, entradas, salidas, fin_de_entrega, updated_at', 'safe'),
+			// The following rule is used by search().
+			// @todo Please remove those attributes that should not be searched.
+			array('id, titulo, enunciado, entradas, salidas, fin_de_entrega, updated_at', 'safe', 'on'=>'search'),
+		);
+	}
+
+	/**
+	 * @return array relational rules.
+	 */
+	public function relations()
+	{
+		// NOTE: you may need to adjust the relation name and the related
+		// class name for the relations automatically generated below.
+		return array(
+		);
+	}
+
+	/**
+	 * @return array customized attribute labels (name=>label)
+	 */
+	public function attributeLabels()
+	{
+		return array(
+			'id' => 'ID',
+			'titulo' => 'Titulo',
+			'enunciado' => 'Enunciado',
+			'entradas' => 'Entradas',
+			'salidas' => 'Salidas',
+			'fin_de_entrega' => 'Fin De Entrega',
+			'updated_at' => 'Updated At',
+		);
+	}
+
+	/**
+	 * Retrieves a list of models based on the current search/filter conditions.
+	 *
+	 * Typical usecase:
+	 * - Initialize the model fields with values from filter form.
+	 * - Execute this method to get CActiveDataProvider instance which will filter
+	 * models according to data in model fields.
+	 * - Pass data provider to CGridView, CListView or any similar widget.
+	 *
+	 * @return CActiveDataProvider the data provider that can return the models
+	 * based on the search/filter conditions.
+	 */
+	public function search()
+	{
+		// @todo Please modify the following code to remove attributes that should not be searched.
+
+		$criteria=new CDbCriteria;
+
+		$criteria->compare('id',$this->id);
+		$criteria->compare('titulo',$this->titulo,true);
+		$criteria->compare('enunciado',$this->enunciado,true);
+		$criteria->compare('entradas',$this->entradas,true);
+		$criteria->compare('salidas',$this->salidas,true);
+		$criteria->compare('fin_de_entrega',$this->fin_de_entrega,true);
+		$criteria->compare('updated_at',$this->updated_at,true);
+
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
+	}
+
+	/**
+	 * Returns the static model of the specified AR class.
+	 * Please note that you should have this exact method in all your CActiveRecord descendants!
+	 * @param string $className active record class name.
+	 * @return Problemas the static model class
+	 */
+	public static function model($className=__CLASS__)
+	{
+		return parent::model($className);
+	}
+}
