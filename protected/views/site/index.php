@@ -1,0 +1,1 @@
+Reunir a destacados investigadores, profesionales y empresarios nacionales e internacionales para intercambiar conocimientos e innovaciones en el área de las Ciencias de la Computación con estudiantes de las diversas carreras del área, y colaborar en la divulgación y creación de conocimiento en las diversas ramas de la actividad pública y privada de nuestro país.
