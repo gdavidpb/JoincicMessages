@@ -18,7 +18,7 @@ class MessagesForm extends CFormModel
 
 	public $log;
 
-	public $messagesPerMinute = 60;
+	public $messagesPerMinute = 1;
 	public $minuteCount = 0;
 
 	public $verifyCode;
@@ -67,7 +67,7 @@ class MessagesForm extends CFormModel
 			$this->log.= $sms->enviar($parameters);
 		}
 		return $this->log;
-		
+
 	}
 
 	/**
