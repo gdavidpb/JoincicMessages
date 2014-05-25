@@ -39,7 +39,7 @@ class MessagesForm extends CFormModel
 			array('body', 'length', 'max'=>140),
 			array('body, suffix, preffix, models, log, minuteCount, messagesPerMinute', 'safe'),
 			// verifyCode needs to be entered correctly
-			array('verifyCode', 'captcha', 'allowEmpty'=>( !CCaptcha::checkRequirements() || !(count($this->models)>0 && $this->tasking()) ) , 'on'=> 'send'),
+			array('verifyCode', 'captcha', 'allowEmpty'=>( !isset($_REQUEST['no_validate']) || !CCaptcha::checkRequirements() || !(count($this->models)>0 && $this->tasking()) ) , 'on'=> 'send'),
 		);
 	}
 	public function tasking(){
@@ -64,9 +64,13 @@ class MessagesForm extends CFormModel
 		$parameters['subcuenta_token'] = Yii::app()->params['subcuenta_token'];
 		$parameters['mensaje'] = $this->preffix.$this->body.$this->suffix;
 		foreach ($slice_models as $model) {
-			$parameters['telefono'] = $model->$attrNumber;
+			if($attrNumber==false)
+				$parameters['telefono'] = $model;
+			else
+				$parameters['telefono'] = $model->$attrNumber;
 			$this->log.= $sms->enviar($parameters);
 		}
+		
 		return $this->log;		
 	}
 

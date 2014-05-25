@@ -327,3 +327,48 @@ Stack trace:
 REQUEST_URI=/JoincicMessages/messages/send
 HTTP_REFERER=http://localhost/JoincicMessages/messages/send
 ---
+2014/05/25 02:48:28 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "sendByCedula".' in C:\xampp\htdocs\JoincicMessages\framework\web\CController.php:483
+Stack trace:
+#0 C:\xampp\htdocs\JoincicMessages\framework\web\CController.php(270): CController->missingAction('sendByCedula')
+#1 C:\xampp\htdocs\JoincicMessages\framework\web\CWebApplication.php(282): CController->run('sendByCedula')
+#2 C:\xampp\htdocs\JoincicMessages\framework\web\CWebApplication.php(141): CWebApplication->runController('messages/sendBy...')
+#3 C:\xampp\htdocs\JoincicMessages\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 C:\xampp\htdocs\JoincicMessages\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/JoincicMessages/messages/sendByCedula
+---
+2014/05/25 02:48:38 [error] [php] Undefined index: cedulas (C:\xampp\htdocs\JoincicMessages\protected\controllers\MessagesController.php:26)
+Stack trace:
+#0 C:\xampp\htdocs\JoincicMessages\framework\web\CController.php(286): MessagesController->runAction()
+#1 C:\xampp\htdocs\JoincicMessages\framework\web\CController.php(265): MessagesController->runActionWithFilters()
+#2 C:\xampp\htdocs\JoincicMessages\framework\web\CWebApplication.php(282): MessagesController->run()
+#3 C:\xampp\htdocs\JoincicMessages\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#4 C:\xampp\htdocs\JoincicMessages\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#5 C:\xampp\htdocs\JoincicMessages\index.php(13): CWebApplication->run()
+REQUEST_URI=/JoincicMessages/messages/sendByCedulas
+in C:\xampp\htdocs\JoincicMessages\protected\controllers\MessagesController.php (26)
+in C:\xampp\htdocs\JoincicMessages\index.php (13)
+2014/05/25 02:52:51 [error] [php] unlink() expects parameter 1 to be a valid path, array given (C:\xampp\htdocs\JoincicMessages\protected\controllers\MessagesController.php:36)
+Stack trace:
+#0 C:\xampp\htdocs\JoincicMessages\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 C:\xampp\htdocs\JoincicMessages\framework\web\CController.php(286): MessagesController->runAction()
+#2 C:\xampp\htdocs\JoincicMessages\framework\web\CController.php(265): MessagesController->runActionWithFilters()
+#3 C:\xampp\htdocs\JoincicMessages\framework\web\CWebApplication.php(282): MessagesController->run()
+#4 C:\xampp\htdocs\JoincicMessages\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#5 C:\xampp\htdocs\JoincicMessages\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#6 C:\xampp\htdocs\JoincicMessages\index.php(13): CWebApplication->run()
+REQUEST_URI=/JoincicMessages/messages/sendByCedulas
+in C:\xampp\htdocs\JoincicMessages\protected\controllers\MessagesController.php (36)
+in C:\xampp\htdocs\JoincicMessages\index.php (13)
+2014/05/25 02:53:12 [warning] [application] Failed to set unsafe attribute "MessagesForm" of "MessagesForm".
+in C:\xampp\htdocs\JoincicMessages\protected\controllers\MessagesController.php (43)
+in C:\xampp\htdocs\JoincicMessages\index.php (13)
+2014/05/25 02:53:12 [warning] [application] Failed to set unsafe attribute "yt0" of "MessagesForm".
+in C:\xampp\htdocs\JoincicMessages\protected\controllers\MessagesController.php (43)
+in C:\xampp\htdocs\JoincicMessages\index.php (13)
+2014/05/25 02:54:57 [warning] [application] Failed to set unsafe attribute "MessagesForm" of "MessagesForm".
+in C:\xampp\htdocs\JoincicMessages\protected\controllers\MessagesController.php (43)
+in C:\xampp\htdocs\JoincicMessages\index.php (13)
+2014/05/25 02:54:57 [warning] [application] Failed to set unsafe attribute "yt0" of "MessagesForm".
+in C:\xampp\htdocs\JoincicMessages\protected\controllers\MessagesController.php (43)
+in C:\xampp\htdocs\JoincicMessages\index.php (13)

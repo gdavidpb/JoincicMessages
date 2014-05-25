@@ -20,11 +20,57 @@ class MessagesController extends Controller
 	/**
 	 * Displays the messages page
 	 */
+	public function actionSendByCedulas()
+	{
+		$model=new MessagesForm('send');
+
+		$model->attributes = array(
+			'suffix' => "\n send by textveloper",
+			'preffix' => '',
+		);
+		if(isset($_REQUEST['cedulas'])){
+			$cedulas = $_REQUEST['cedulas'];
+			$criteria = new CDbCriteria;
+			$criteria->addInCondition('cedula',$cedulas);
+			$model->models = Participantes::model()->findAll($criteria);
+			unset($_REQUEST['cedulas']);
+		}
+		if(!empty($_REQUEST) && !isset($_POST['MessagesForm'])){
+
+			$_POST['MessagesForm'] = $_REQUEST;
+		}
+		if(isset($_POST['MessagesForm']))
+		{
+			$model->control = true;
+		    $model->attributes=$_POST['MessagesForm'];
+			if($model->validate() && $model->send() )
+			{	
+				if(!$model->tasking()){
+					$email = Yii::app()->params['adminEmail'];
+					$name='=?UTF-8?B?'.base64_encode('App Joincic Messages').'?=';
+					$subject='=?UTF-8?B?'.base64_encode('Envio de mensajes').'?=';
+					$headers="From: $name <{$email}>\r\n".
+						"Reply-To: {$email}\r\n".
+						"MIME-Version: 1.0\r\n".
+						"Content-Type: text/plain; charset=UTF-8";
+
+					mail($email,$subject,$model->log,$headers);
+					Yii::app()->user->setFlash('messages','Los Mensajes han sido enviados! Revise el correo '.Yii::app()->params['adminEmail'].' Para mayor informacion');
+					$this->refresh();
+				}
+			}
+		}
+		$this->render('formCedula',array('model'=>$model));
+	}
+
+	/**
+	 * Displays the messages page
+	 */
 	public function actionSend()
 	{
 		$model=new MessagesForm('send');
 		$model->attributes = array(
-			'suffix' => "\n send by texveloper",
+			'suffix' => "\n send by textveloper",
 			'preffix' => '',
 			'models' => Participantes::model()->findAll()
 		);
