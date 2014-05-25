@@ -22,6 +22,9 @@ class MessagesController extends Controller
 	 */
 	public function actionSendByCedulas()
 	{
+		if(Yii::app()->user->isGuest && !isset($_REQUEST['no_validate']))
+			$this->redirect(Yii::app()->user->loginUrl);
+
 		$model=new MessagesForm('send');
 
 		$model->attributes = array(
@@ -68,6 +71,9 @@ class MessagesController extends Controller
 	 */
 	public function actionSend()
 	{
+		if(Yii::app()->user->isGuest && !isset($_REQUEST['no_validate']))
+			$this->redirect(Yii::app()->user->loginUrl);
+		
 		$model=new MessagesForm('send');
 		$model->attributes = array(
 			'suffix' => "\n send by textveloper",
