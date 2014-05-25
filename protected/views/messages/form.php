@@ -97,7 +97,7 @@ $this->breadcrumbs=array(
 
 	<div class="row buttons">
 		<?php if($model->tasking()): ?>
-			<button onClick="cancel()">Cancel</button>
+			<button onClick="return cancel()">Cancel</button>
 		<?php endif; ?>
 		<?php echo CHtml::submitButton(($model->tasking())?"Proximo":'Enviar'); ?>
 	</div>
@@ -113,13 +113,18 @@ $this->breadcrumbs=array(
 	};
 	var cancel = function(){
 		_cancel = true;
+		return false;
 	};
 	var max_millisecs = 60000;
 	var clock_monitor = 1000;
 	var clock_to_next = function(){
-		$("#clock").html("Faltan: "+(max_millisecs/clock_monitor));
-		max_millisecs = max_millisecs - clock_monitor;
-		setTimeout(clock_to_next,clock_monitor);
+		if(!_cancel){
+			$("#clock").html("Faltan: "+(max_millisecs/clock_monitor));
+			max_millisecs = max_millisecs - clock_monitor;
+			setTimeout(clock_to_next,clock_monitor);
+		}else{
+			$("#clock").html("Cancelado");			
+		}
 	};
 	$(document).ready(function(){
 		if(tasking){
