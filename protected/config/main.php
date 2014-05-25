@@ -71,5 +71,7 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'contacto@joincic.com.ve',
+		'cuenta_token' => '0f0e8682057a87d03db1c5f0364ddcd0',
+		'subcuenta_token' => '6b47ba41e5fa76d15c6e2734eb99cbf2',
 	),
 );
