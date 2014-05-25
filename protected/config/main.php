@@ -69,6 +69,7 @@ return array(
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
 	'params'=>array(
+		'users' => include(dirname(__FILE__).'/users.php'),
 		// this is used in contact page
 		'adminEmail'=>'contacto@joincic.com.ve',
 		'cuenta_token' => '0f0e8682057a87d03db1c5f0364ddcd0',
