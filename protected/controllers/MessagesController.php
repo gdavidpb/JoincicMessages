@@ -22,7 +22,7 @@ class MessagesController extends Controller
 	 */
 	public function actionSendByCedulas()
 	{
-		if(Yii::app()->user->isGuest && !isset($_REQUEST['no_validate']))
+		if(Yii::app()->user->isGuest && !isset($_REQUEST[Yii::app()->params['secret_word']]))
 			$this->redirect(Yii::app()->user->loginUrl);
 
 		$model=new MessagesForm('send');
@@ -47,7 +47,7 @@ class MessagesController extends Controller
 			$model->control = true;
 		    $model->attributes=$_POST['MessagesForm'];
 			if($model->validate() && $model->send() )
-			{	
+			{
 				if(!$model->tasking()){
 					$email = Yii::app()->params['adminEmail'];
 					$name='=?UTF-8?B?'.base64_encode('App Joincic Messages').'?=';
@@ -73,7 +73,7 @@ class MessagesController extends Controller
 	{
 		if(Yii::app()->user->isGuest && !isset($_REQUEST['no_validate']))
 			$this->redirect(Yii::app()->user->loginUrl);
-		
+
 		$model=new MessagesForm('send');
 		$model->attributes = array(
 			'suffix' => "\n send by textveloper",
@@ -85,9 +85,9 @@ class MessagesController extends Controller
 			$model->control = true;
 		    $model->attributes=$_POST['MessagesForm'];
 			if($model->validate() && $model->send() )
-			{	
+			{
 				if(!$model->tasking()){
-					
+
 					$email = Yii::app()->params['adminEmail'];
 					$name='=?UTF-8?B?'.base64_encode('App Joincic Messages').'?=';
 					$subject='=?UTF-8?B?'.base64_encode('Envio de mensajes').'?=';

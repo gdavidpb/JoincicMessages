@@ -11,9 +11,9 @@ class MessagesForm extends CFormModel
 	public $body;
 
 	public $suffix;
-	
+
 	public $preffix;
-	
+
 	public $models = array();
 
 	public $log;
@@ -22,7 +22,7 @@ class MessagesForm extends CFormModel
 	public $minuteCount = 0;
 
 	public $verifyCode;
-	
+
 	public $control = false;
 	public $slice_models = array();
 
@@ -43,7 +43,7 @@ class MessagesForm extends CFormModel
 		);
 	}
 	public function tasking(){
-		return $this->control && $this->minuteCount*$this->messagesPerMinute < count($this->models); 
+		return $this->control && $this->minuteCount*$this->messagesPerMinute < count($this->models);
 	}
 	public function send(){
 		if(!is_array($this->models) || !$this->tasking() ) return false;
@@ -56,8 +56,8 @@ class MessagesForm extends CFormModel
 		}
 		$this->minuteCount=$this->minuteCount+1;
 		$attrNumber = $this->attrNumber;
-		
-		
+
+
 		$sms = new Textveloper();
 		$parameters = array();
 		$parameters['cuenta_token'] = Yii::app()->params['cuenta_token'];
@@ -70,8 +70,8 @@ class MessagesForm extends CFormModel
 				$parameters['telefono'] = $model->$attrNumber;
 			$this->log.= $sms->enviar($parameters);
 		}
-		
-		return $this->log;		
+
+		return $this->log;
 	}
 
 	/**

@@ -7,7 +7,7 @@ $this->pageTitle=Yii::app()->name . ' - Messages';
 $this->breadcrumbs=array(
 	'Messages',
 );
-	
+
 	Yii::app()->clientScript->registerCoreScript('jquery');
 
 ?>
@@ -46,7 +46,7 @@ $this->breadcrumbs=array(
 		<?php echo $form->labelEx($model,'preffix'); ?>
 
 	<?php if(!$model->tasking()): ?>
-		<?php echo $form->textField($model,'preffix'); ?>	
+		<?php echo $form->textField($model,'preffix'); ?>
 	<?php else: ?>
 		<?php echo $form->hiddenField($model,'preffix'); ?>
 		<?php echo CHtml::encode($model->preffix); ?></br>
@@ -59,7 +59,7 @@ $this->breadcrumbs=array(
 		<?php echo $form->labelEx($model,'suffix'); ?>
 
 	<?php if(!$model->tasking()): ?>
-		<?php echo $form->textField($model,'suffix'); ?>	
+		<?php echo $form->textField($model,'suffix'); ?>
 	<?php else: ?>
 		<?php echo $form->hiddenField($model,'suffix'); ?>
 		<?php echo CHtml::encode($model->suffix); ?></br>
@@ -73,7 +73,7 @@ $this->breadcrumbs=array(
 		<?php echo $form->labelEx($model,'body'); ?>
 
 	<?php if(!$model->tasking()): ?>
-		<?php echo $form->textArea($model,'body',array('rows'=>6, 'cols'=>50)); ?>	
+		<?php echo $form->textArea($model,'body',array('rows'=>6, 'cols'=>50)); ?>
 	<?php else: ?>
 		<?php echo $form->hiddenField($model,'body'); ?>
 		<?php echo CHtml::encode($model->body); ?></br>
@@ -97,7 +97,7 @@ $this->breadcrumbs=array(
 
 	<div class="row buttons">
 		<?php if($model->tasking()): ?>
-			<button onClick="return cancel()">Cancel</button>
+			<input type="button" onClick="return cancel()" name="Cancel" value="Cancel">
 		<?php endif; ?>
 		<?php echo CHtml::submitButton(($model->tasking())?"Proximo":'Enviar'); ?>
 	</div>
@@ -108,7 +108,7 @@ $this->breadcrumbs=array(
 	var tasking = <?php echo CJSON::encode($model->tasking()); ?>;
 	var _cancel = false;
 	var send_messages = function(){
-			if(!_cancel)		
+			if(!_cancel)
 				$("#messages-form").submit();
 	};
 	var cancel = function(){
@@ -123,7 +123,7 @@ $this->breadcrumbs=array(
 			max_millisecs = max_millisecs - clock_monitor;
 			setTimeout(clock_to_next,clock_monitor);
 		}else{
-			$("#clock").html("Cancelado");			
+			$("#clock").html("Cancelado");
 		}
 	};
 	$(document).ready(function(){
@@ -131,7 +131,7 @@ $this->breadcrumbs=array(
 			setTimeout(function(){
 				send_messages();
 			},max_millisecs);
-			clock_to_next();			
+			clock_to_next();
 		}
 	});
 
@@ -141,10 +141,10 @@ $this->breadcrumbs=array(
 
 <?php 	foreach ($model->slice_models as $participante) { ?>
 <div class="flash-success">
-			Mensaje enviado a : 
-					<?php echo $participante->telefono; ?> - 
-					<?php echo $participante->nombre; ?> 
-					<?php echo $participante->apellido; ?> 
+			Mensaje enviado a :
+					<?php echo $participante->telefono; ?> -
+					<?php echo $participante->nombre; ?>
+					<?php echo $participante->apellido; ?>
 					C.I <?php echo $participante->cedula; ?> </br>
 </div>
 <?php	} ?>
