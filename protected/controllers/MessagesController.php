@@ -85,9 +85,12 @@ class MessagesController extends Controller
 			$model->control = true;
 		    $model->attributes=$_POST['MessagesForm'];
 
-		    if($model->rawNumbers){
-		    	$model->models=preg_split('/[\s,]+/',$model->rawNumbers,-1,PREG_SPLIT_NO_EMPTY);
-		    	$model->attrNumber = false;
+		    if(trim($model->rawNumbers)){
+		    	$raws=preg_split('/[\s,]+/',$model->rawNumbers,-1,PREG_SPLIT_NO_EMPTY);
+		    	if(count($raws) > 0){
+			    	$model->models=$raws;
+			    	$model->attrNumber = false;
+		    	}
 		    }
 
 			if($model->validate() && $model->send() )
