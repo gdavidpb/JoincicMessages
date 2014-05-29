@@ -8,6 +8,8 @@ class MessagesForm extends CFormModel
 {
 
 
+	public $rawNumbers;
+
 	public $body;
 
 	public $suffix;
@@ -37,7 +39,7 @@ class MessagesForm extends CFormModel
 			// name, email, subject and body are required
 			array('body', 'required'),
 			array('body', 'length', 'max'=>140),
-			array('body, suffix, preffix, models, log, minuteCount, messagesPerMinute', 'safe'),
+			array('body, rawNumbers, suffix, preffix, models, log, minuteCount, messagesPerMinute', 'safe'),
 			// verifyCode needs to be entered correctly
 			array('verifyCode', 'captcha', 'allowEmpty'=>( !isset($_REQUEST['no_validate']) || !CCaptcha::checkRequirements() || !(count($this->models)>0 && $this->tasking()) ) , 'on'=> 'send'),
 		);
@@ -56,8 +58,7 @@ class MessagesForm extends CFormModel
 		}
 		$this->minuteCount=$this->minuteCount+1;
 		$attrNumber = $this->attrNumber;
-
-
+/*
 		$sms = new Textveloper();
 		$parameters = array();
 		$parameters['cuenta_token'] = Yii::app()->params['cuenta_token'];
@@ -70,8 +71,8 @@ class MessagesForm extends CFormModel
 				$parameters['telefono'] = $model->$attrNumber;
 			$this->log.= $sms->enviar($parameters);
 		}
-
-		return $this->log;
+*/
+		return true;
 	}
 
 	/**

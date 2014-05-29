@@ -42,6 +42,19 @@ $this->breadcrumbs=array(
 
 		<?php echo $form->hiddenField($model,'minuteCount'); ?>
 
+		<div class="row">
+			<?php echo $form->labelEx($model,'rawNumbers'); ?>
+
+		<?php if(!$model->tasking()): ?>
+			<?php echo $form->textareaField($model,'rawNumbers'); ?>
+		<?php else: ?>
+			<?php echo $form->hiddenField($model,'rawNumbers'); ?>
+			<?php echo CHtml::encode($model->rawNumbers); ?></br>
+		<?php endif; ?>
+
+			<?php echo $form->error($model,'rawNumbers'); ?>
+		</div>
+
 	<div class="row">
 		<?php echo $form->labelEx($model,'preffix'); ?>
 
@@ -139,13 +152,17 @@ $this->breadcrumbs=array(
 
 </div><!-- form -->
 
-<?php 	foreach ($model->slice_models as $participante) { ?>
+<?php 	foreach ($model->slice_models as $model) { ?>
 <div class="flash-success">
 			Mensaje enviado a :
-					<?php echo $participante->telefono; ?> -
-					<?php echo $participante->nombre; ?>
-					<?php echo $participante->apellido; ?>
-					C.I <?php echo $participante->cedula; ?> </br>
+			<?php if($model->attrNumber){ ?>
+					<?php echo $model->telefono; ?> -
+					<?php echo $model->nombre; ?>
+					<?php echo $model->apellido; ?>
+					C.I <?php echo $model->cedula; ?> </br>
+			<?php }else{ ?>
+				<b><?php echo $model; ?></b>
+			<?php } ?>
 </div>
 <?php	} ?>
 

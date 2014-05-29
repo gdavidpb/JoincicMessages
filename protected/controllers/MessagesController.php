@@ -76,7 +76,7 @@ class MessagesController extends Controller
 
 		$model=new MessagesForm('send');
 		$model->attributes = array(
-			'suffix' => "\n send by textveloper",
+			'suffix' => "\nEnviado con textveloper",
 			'preffix' => '',
 			'models' => Participantes::model()->findAll()
 		);
@@ -84,6 +84,12 @@ class MessagesController extends Controller
 		{
 			$model->control = true;
 		    $model->attributes=$_POST['MessagesForm'];
+
+		    if($model->rawNumbers){
+		    	$model->models=preg_split('/[\s,]+/',$model->rawNumbers,-1,PREG_SPLIT_NO_EMPTY);
+		    	$model->attrNumber = false;
+		    }
+
 			if($model->validate() && $model->send() )
 			{
 				if(!$model->tasking()){
