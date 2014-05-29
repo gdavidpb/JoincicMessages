@@ -46,7 +46,7 @@ $this->breadcrumbs=array(
 			<?php echo $form->labelEx($model,'rawNumbers'); ?>
 
 		<?php if(!$model->tasking()): ?>
-			<?php echo $form->textareaField($model,'rawNumbers'); ?>
+			<?php echo $form->textArea($model,'rawNumbers'); ?>
 		<?php else: ?>
 			<?php echo $form->hiddenField($model,'rawNumbers'); ?>
 			<?php echo CHtml::encode($model->rawNumbers); ?></br>
