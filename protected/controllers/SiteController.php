@@ -30,9 +30,9 @@ class SiteController extends Controller
 		function  aHtml($cadena){
 				$minusculas = array ('á'=>'&aacute;','é'=>'&eacute;','í'=>'&iacute;','ó'=>'&oacute;', 'ú'=>'&uacute;','ñ'=>'&ntilde;');
 				$mayusculas = array ('Á'=>'&Aacute;','É'=>'&Eacute;','Í'=>'&Iacute;','Ó'=>'&Oacute;', 'Ú'=>'&Uacute;','Ñ'=>'&Ntilde;');
-				$cad = strtr($cadena,$minusculas);
-				$cad = strtr($cadena,$mayusculas);
-				return $cad;
+				$cadena = strtr($cadena,$minusculas);
+				$cadena = strtr($cadena,$mayusculas);
+				return $cadena;
 		}
 		if(isset($_FILES["upload_file"])){
 			$fileContent = file_get_contents($_FILES['upload_file']['tmp_name']);
