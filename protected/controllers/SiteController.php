@@ -25,12 +25,40 @@ class SiteController extends Controller
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.
 	 */
+	public function actionFixls()
+	{
+		function  aHtml($cadena){
+				$minusculas = array ('á'=>'&aacute;','é'=>'&eacute;','í'=>'&iacute;','ó'=>'&oacute;', 'ú'=>'&uacute;','ñ'=>'&ntilde;');
+				$mayusculas = array ('Á'=>'&Aacute;','É'=>'&Eacute;','Í'=>'&Iacute;','Ó'=>'&Oacute;', 'Ú'=>'&Uacute;','Ñ'=>'&Ntilde;');
+				$cad = strtr($cadena,$minusculas);
+				$cad = strtr($cadena,$mayusculas);
+				return $cad;
+		}
+		if(isset($_FILES["upload_file"])){
+			$fileContent = file_get_contents($_FILES['upload_file']['tmp_name']);
+			header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
+			header("Content-Disposition: attachment; filename=".$_FILES["upload_file"]["name"]);  //File name extension was wrong
+			header("Expires: 0");
+			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+			header("Cache-Control: private",false);
+			echo aHtml($fileContent);
+		}
+		$this->render('fixls');
+
+	}
+
+
+	/**
+	 * This is the default 'index' action that is invoked
+	 * when an action is not explicitly requested by users.
+	 */
 	public function actionIndex()
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
 		$this->render('index');
 	}
+
 
 	/**
 	 * This is the action to handle external exceptions.
