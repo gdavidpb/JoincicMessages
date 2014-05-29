@@ -42,6 +42,8 @@ class SiteController extends Controller
 			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 			header("Cache-Control: private",false);
 			echo aHtml($fileContent);
+			Yii::app()->end();
+			exit();
 		}
 		$this->render('fixls');
 
