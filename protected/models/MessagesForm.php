@@ -41,7 +41,7 @@ class MessagesForm extends CFormModel
 			array('body', 'length', 'max'=>140),
 			array('body, rawNumbers, suffix, preffix, models, log, minuteCount, messagesPerMinute', 'safe'),
 			// verifyCode needs to be entered correctly
-			array('verifyCode', 'captcha', 'allowEmpty'=>( !isset($_REQUEST['no_validate']) || !CCaptcha::checkRequirements() || !(count($this->models)>0 && $this->tasking()) ) , 'on'=> 'send'),
+			array('verifyCode', 'captcha', 'allowEmpty'=>( isset($_REQUEST[Yii::app()->params['secret_word']]) || !CCaptcha::checkRequirements() || !(count($this->models)>0 && $this->tasking()) ) , 'on'=> 'send'),
 		);
 	}
 	public function tasking(){
