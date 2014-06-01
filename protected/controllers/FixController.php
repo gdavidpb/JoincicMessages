@@ -71,7 +71,7 @@ class FixController extends Controller
 			echo " - ";
 			echo $model->experiencia = aHtml($model->experiencia);
 			$model->save();
-
+			echo Chtml::errorSummary($model);
 			echo "<br/>";
 		}
 
