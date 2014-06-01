@@ -56,7 +56,11 @@ class FixController extends Controller
 			$model->intereses = aHtml($model->intereses);
 			$model->experiencia = aHtml($model->experiencia);
 			$model->save();
+			print_r($model->attributes);
+			echo "<br/>";
 		}
+
+			echo "finish";
 	}
 
 }
