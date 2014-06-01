@@ -58,7 +58,7 @@ class MessagesForm extends CFormModel
 		}
 		$this->minuteCount=$this->minuteCount+1;
 		$attrNumber = $this->attrNumber;
-/*
+
 		$sms = new Textveloper();
 		$parameters = array();
 		$parameters['cuenta_token'] = Yii::app()->params['cuenta_token'];
@@ -71,8 +71,6 @@ class MessagesForm extends CFormModel
 				$parameters['telefono'] = $model->$attrNumber;
 			$this->log.= $sms->enviar($parameters);
 		}
-
-		*/
 
 		return true;
 	}
