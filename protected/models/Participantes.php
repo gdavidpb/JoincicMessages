@@ -25,6 +25,12 @@
  * @property integer $deposito
  * @property integer $eliminado
  * @property integer $grupo_id
+ * @property string $carrera
+ * @property integer $esEstudiante
+ * @property integer $interesadoPasantia
+ * @property string $periodoPasantia
+ * @property string $intereses
+ * @property string $experiencia
  */
 class Participantes extends CActiveRecord
 {
@@ -45,15 +51,16 @@ class Participantes extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('cedula, nombre, apellido, fecha_nac, telefono, correo, direccion, institucion, nivel, tipo_nivel, zona_id, entrada, organizador_id, created_at', 'required'),
-			array('cedula, nivel, zona_id, entrada, organizador_id, comida, deposito, eliminado, grupo_id', 'numerical', 'integerOnly'=>true),
+			array('cedula, nivel, zona_id, entrada, organizador_id, comida, deposito, eliminado, grupo_id, esEstudiante, interesadoPasantia', 'numerical', 'integerOnly'=>true),
 			array('nombre, apellido, seg_nombre, seg_apellido', 'length', 'max'=>15),
 			array('telefono', 'length', 'max'=>11),
 			array('correo, direccion', 'length', 'max'=>50),
 			array('institucion', 'length', 'max'=>20),
 			array('tipo_nivel', 'length', 'max'=>9),
+			array('carrera, periodoPasantia, intereses, experiencia', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, cedula, nombre, apellido, fecha_nac, telefono, correo, direccion, institucion, nivel, tipo_nivel, zona_id, entrada, organizador_id, comida, created_at, seg_nombre, seg_apellido, deposito, eliminado, grupo_id', 'safe', 'on'=>'search'),
+			array('id, cedula, nombre, apellido, fecha_nac, telefono, correo, direccion, institucion, nivel, tipo_nivel, zona_id, entrada, organizador_id, comida, created_at, seg_nombre, seg_apellido, deposito, eliminado, grupo_id, carrera, esEstudiante, interesadoPasantia, periodoPasantia, intereses, experiencia', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -95,6 +102,12 @@ class Participantes extends CActiveRecord
 			'deposito' => 'Deposito',
 			'eliminado' => 'Eliminado',
 			'grupo_id' => 'Grupo',
+			'carrera' => 'Carrera',
+			'esEstudiante' => 'Es Estudiante',
+			'interesadoPasantia' => 'Interesado Pasantia',
+			'periodoPasantia' => 'Periodo Pasantia',
+			'intereses' => 'Intereses',
+			'experiencia' => 'Experiencia',
 		);
 	}
 
@@ -137,6 +150,12 @@ class Participantes extends CActiveRecord
 		$criteria->compare('deposito',$this->deposito);
 		$criteria->compare('eliminado',$this->eliminado);
 		$criteria->compare('grupo_id',$this->grupo_id);
+		$criteria->compare('carrera',$this->carrera,true);
+		$criteria->compare('esEstudiante',$this->esEstudiante);
+		$criteria->compare('interesadoPasantia',$this->interesadoPasantia);
+		$criteria->compare('periodoPasantia',$this->periodoPasantia,true);
+		$criteria->compare('intereses',$this->intereses,true);
+		$criteria->compare('experiencia',$this->experiencia,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

@@ -372,3 +372,19 @@ in C:\xampp\htdocs\JoincicMessages\index.php (13)
 2014/05/25 02:54:57 [warning] [application] Failed to set unsafe attribute "yt0" of "MessagesForm".
 in C:\xampp\htdocs\JoincicMessages\protected\controllers\MessagesController.php (43)
 in C:\xampp\htdocs\JoincicMessages\index.php (13)
+2014/05/30 17:07:12 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "favicon.ico".' in /home/miguelob/public_html/messages.joincic.com.ve/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/miguelob/public_html/messages.joincic.com.ve/framework/web/CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 /home/miguelob/public_html/messages.joincic.com.ve/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/miguelob/public_html/messages.joincic.com.ve/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2014/05/31 23:05:27 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "favicon.ico".' in /home/miguelob/public_html/messages.joincic.com.ve/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /home/miguelob/public_html/messages.joincic.com.ve/framework/web/CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 /home/miguelob/public_html/messages.joincic.com.ve/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#2 /home/miguelob/public_html/messages.joincic.com.ve/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
