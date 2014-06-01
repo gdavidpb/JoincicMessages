@@ -63,15 +63,15 @@ class FixController extends Controller
 				return $cadena;
 		}
 		$particpantes = Participantes::model()->findAll();
-		echo aHtml('Dise\xC3\xB1o de interfaces');
-		exit();
 
 		foreach ($particpantes as $model) {
-			$model->intereses = aHtml($model->intereses);
-			$model->experiencia = aHtml($model->experiencia);
+
+			echo " - ".$model->cedula;
+			echo $model->intereses = aHtml($model->intereses);
+			echo " - ";
+			echo $model->experiencia = aHtml($model->experiencia);
 			$model->save();
-			echo Chtml::errorSummary($model);
-			var_dump($model->attributes);
+
 			echo "<br/>";
 		}
 
