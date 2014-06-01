@@ -7,57 +7,35 @@ class FixController extends Controller
 	public function actionFixParticipantes(){
 
 
-		function  aHtml($cadena){
-				$minusculas = array(
-					'á'=>'&aacute;',
-					'é'=>'&eacute;',
-					'í'=>'&iacute;',
-					'ó'=>'&oacute;', 
-					'ú'=>'&uacute;',
-					'ñ'=>'&ntilde;'
-				);
-				$mayusculas = array(
-					'Á'=>'&Aacute;',
-					'É'=>'&Eacute;',
-					'Í'=>'&Iacute;',
-					'Ó'=>'&Oacute;', 
-					'Ú'=>'&Uacute;',
-					'Ñ'=>'&Ntilde;'
-				);
-
-
+		function  utf_ascii($cadena){
 				$utf_minusculas = array(
-					'\xc3\xa1'=>'&aacute;',
-					'\xc3\xa9'=>'&eacute;',
-					'\xc3\xad'=>'&iacute;',
-					'\xc3\xb3'=>'&oacute;', 
-					'\xc3\xba'=>'&uacute;',
-					'\xc3\xb1'=>'&ntilde;',
-					'\xC3\xA1'=>'&aacute;',
-					'\xC3\xA9'=>'&eacute;',
-					'\xC3\xAD'=>'&iacute;',
-					'\xC3\xB3'=>'&oacute;', 
-					'\xC3\xBA'=>'&uacute;',
-					'\xC3\xB1'=>'&ntilde;'
+					'\xc3\xa1'=>'á',
+					'\xc3\xa9'=>'é',
+					'\xc3\xad'=>'í',
+					'\xc3\xb3'=>'ó', 
+					'\xc3\xba'=>'ú',
+					'\xc3\xb1'=>'ñ',
+					'\xC3\xA1'=>'á',
+					'\xC3\xA9'=>'é',
+					'\xC3\xAD'=>'í',
+					'\xC3\xB3'=>'ó', 
+					'\xC3\xBA'=>'ú',
+					'\xC3\xB1'=>'ñ'
 				);
-
 				$utf_mayusculas = array(
-					'\xc3\x81'=>'&Aacute;',
-					'\xc3\x89'=>'&Eacute;',
-					'\xc3\x8d'=>'&Iacute;',
-					'\xc3\x93'=>'&Oacute;', 
-					'\xc3\x9a'=>'&Uacute;',
-					'\xc3\x91'=>'&Ntilde;',
-					'\xC3\x81'=>'&Aacute;',
-					'\xC3\x89'=>'&Eacute;',
-					'\xC3\x8d'=>'&Iacute;',
-					'\xC3\x93'=>'&Oacute;', 
-					'\xC3\x9a'=>'&Uacute;',
-					'\xC3\x91'=>'&Ntilde;'
+					'\xc3\x81'=>'Á',
+					'\xc3\x89'=>'É',
+					'\xc3\x8d'=>'Í',
+					'\xc3\x93'=>'Ó', 
+					'\xc3\x9a'=>'Ú',
+					'\xc3\x91'=>'Ñ',
+					'\xC3\x81'=>'Á',
+					'\xC3\x89'=>'É',
+					'\xC3\x8d'=>'Í',
+					'\xC3\x93'=>'Ó', 
+					'\xC3\x9a'=>'Ú',
+					'\xC3\x91'=>'Ñ'
 				);
-
-				$cadena = strtr($cadena,$minusculas);
-				$cadena = strtr($cadena,$mayusculas);
 				$cadena = strtr($cadena,$utf_minusculas);
 				$cadena = strtr($cadena,$utf_mayusculas);
 				return $cadena;
@@ -67,9 +45,9 @@ class FixController extends Controller
 		foreach ($particpantes as $model) {
 
 			echo " - ".$model->cedula;
-			echo $model->intereses = html_entity_decode(aHtml($model->intereses));
+			echo $model->intereses = utf_ascii($model->intereses);
 			echo " - ";
-			echo $model->experiencia = html_entity_decode(aHtml($model->experiencia));
+			echo $model->experiencia = utf_ascii($model->experiencia);
 			$model->save();
 			echo CHtml::errorSummary($model);
 			echo "<br/>";
