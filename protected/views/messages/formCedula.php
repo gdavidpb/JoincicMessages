@@ -146,6 +146,9 @@ $this->breadcrumbs=array(
 
 </div><!-- form -->
 
+<?php endif; ?>
+
+
 <?php 	foreach ($model->slice_models as $participante) { ?>
 <div class="flash-success">
 			Mensaje enviado a : 
@@ -155,5 +158,3 @@ $this->breadcrumbs=array(
 					C.I <?php echo $participante->cedula; ?> </br>
 </div>
 <?php	} ?>
-
-<?php endif; ?>
