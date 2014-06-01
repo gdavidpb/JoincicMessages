@@ -30,7 +30,7 @@ class MessagesController extends Controller
 		$model=new MessagesForm('send');
 
 		$model->attributes = array(
-			'suffix' => "\n send by textveloper",
+			'suffix' => "\nenviado con textveloper",
 			'preffix' => '',
 		);
 		if(isset($_REQUEST['cedulas'])){
@@ -62,7 +62,12 @@ class MessagesController extends Controller
 
 					mail($email,$subject,$model->log,$headers);
 					Yii::app()->user->setFlash('messages','Los Mensajes han sido enviados! Revise el correo '.Yii::app()->params['adminEmail'].' Para mayor informacion');
-					$this->refresh();
+					
+					$model->attributes = array(
+						'body' => '',
+					);
+					$model->minuteCount = 0;
+					$model->control = false;
 				}
 			}
 		}
