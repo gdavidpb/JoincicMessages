@@ -32,15 +32,28 @@ class FixController extends Controller
 					'\xc3\xad'=>'&iacute;',
 					'\xc3\xb3'=>'&oacute;', 
 					'\xc3\xba'=>'&uacute;',
-					'\xc3\xb1'=>'&ntilde;'
+					'\xc3\xb1'=>'&ntilde;',
+					'\xC3\xA1'=>'&aacute;',
+					'\xC3\xA9'=>'&eacute;',
+					'\xC3\xAD'=>'&iacute;',
+					'\xC3\xB3'=>'&oacute;', 
+					'\xC3\xBA'=>'&uacute;',
+					'\xC3\xB1'=>'&ntilde;'
 				);
+
 				$utf_mayusculas = array(
 					'\xc3\x81'=>'&Aacute;',
 					'\xc3\x89'=>'&Eacute;',
 					'\xc3\x8d'=>'&Iacute;',
 					'\xc3\x93'=>'&Oacute;', 
 					'\xc3\x9a'=>'&Uacute;',
-					'\xc3\x91'=>'&Ntilde;'
+					'\xc3\x91'=>'&Ntilde;',
+					'\xC3\x81'=>'&Aacute;',
+					'\xC3\x89'=>'&Eacute;',
+					'\xC3\x8d'=>'&Iacute;',
+					'\xC3\x93'=>'&Oacute;', 
+					'\xC3\x9a'=>'&Uacute;',
+					'\xC3\x91'=>'&Ntilde;'
 				);
 
 				$cadena = strtr($cadena,$minusculas);
