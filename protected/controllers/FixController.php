@@ -71,7 +71,7 @@ class FixController extends Controller
 			echo " - ";
 			echo $model->experiencia = html_entity_decode(aHtml($model->experiencia));
 			$model->save();
-			echo Chtml::errorSummary($model);
+			echo CHtml::errorSummary($model);
 			echo "<br/>";
 		}
 
