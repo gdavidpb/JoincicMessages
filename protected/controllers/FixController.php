@@ -63,7 +63,7 @@ class FixController extends Controller
 				return $cadena;
 		}
 		$particpantes = Participantes::model()->findAll();
-		echo aHtml("Dise\xC3\xB1o de interfaces");
+		echo aHtml('Dise\xC3\xB1o de interfaces');
 		exit();
 
 		foreach ($particpantes as $model) {
