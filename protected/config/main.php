@@ -39,6 +39,9 @@ return array(
 				'urlManager'=>array(
 					'urlFormat'=>'path',
 					'rules'=>array(
+						'byCedulas'=>'messages/sendByCedulas',
+						'send'=>'messages/send',
+
 						'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 						'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
 						'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',

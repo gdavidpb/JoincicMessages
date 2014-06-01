@@ -40,9 +40,10 @@ class MessagesController extends Controller
 			$model->models = Participantes::model()->findAll($criteria);
 			unset($_REQUEST['cedulas']);
 		}
-		if(!empty($_REQUEST) && !isset($_POST['MessagesForm'])){
-
-			$_POST['MessagesForm'] = $_REQUEST;
+		if(isset($_REQUEST['body']) && !isset($_POST['MessagesForm'])){
+			$_POST['MessagesForm']= array(
+				'body' => $_REQUEST['body']
+			);
 		}
 		if(isset($_POST['MessagesForm']))
 		{
