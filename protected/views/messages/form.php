@@ -154,16 +154,16 @@ $this->breadcrumbs=array(
 <?php endif; ?>
 
 
-<?php 	foreach ($model->slice_models as $model) { ?>
+<?php 	foreach ($model->slice_models as $participante) { ?>
 <div class="flash-success">
 			Mensaje enviado a :
 			<?php if($model->attrNumber){ ?>
-					<?php echo $model->telefono; ?> -
-					<?php echo $model->nombre; ?>
-					<?php echo $model->apellido; ?>
-					C.I <?php echo $model->cedula; ?> </br>
+					<?php echo $participante->telefono; ?> -
+					<?php echo $participante->nombre; ?>
+					<?php echo $participante->apellido; ?>
+					C.I <?php echo $participante->cedula; ?> </br>
 			<?php }else{ ?>
-				<b><?php echo $model; ?></b>
+				<b><?php echo $participante; ?></b>
 			<?php } ?>
 </div>
 <?php	} ?>
