@@ -4,7 +4,7 @@ class FixController extends Controller
 {
 //http://messages.joincic.com.ve/byCedulas?no_validate&cedulas[]=19222155&body=hola
 
-	public actionFixParticipantes(){
+	public function actionFixParticipantes(){
 
 
 		function  aHtml($cadena){
