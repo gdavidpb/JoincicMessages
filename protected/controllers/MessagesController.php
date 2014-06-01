@@ -22,7 +22,9 @@ class MessagesController extends Controller
 	 */
 	public function actionSendByCedulas()
 	{
-		if(Yii::app()->user->isGuest && !isset($_REQUEST[Yii::app()->params['secret_word']]))
+
+		if(Yii::app()->user->isGuest)
+		 if(!isset($_REQUEST[Yii::app()->params['secret_word']]))
 			$this->redirect(Yii::app()->user->loginUrl);
 
 		$model=new MessagesForm('send');
