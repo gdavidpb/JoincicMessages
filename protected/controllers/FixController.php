@@ -67,9 +67,9 @@ class FixController extends Controller
 		foreach ($particpantes as $model) {
 
 			echo " - ".$model->cedula;
-			echo $model->intereses = aHtml($model->intereses);
+			echo $model->intereses = html_entity_decode(aHtml($model->intereses));
 			echo " - ";
-			echo $model->experiencia = aHtml($model->experiencia);
+			echo $model->experiencia = html_entity_decode(aHtml($model->experiencia));
 			$model->save();
 			echo Chtml::errorSummary($model);
 			echo "<br/>";
