@@ -151,6 +151,8 @@ $this->breadcrumbs=array(
 </script>
 
 </div><!-- form -->
+<?php endif; ?>
+
 
 <?php 	foreach ($model->slice_models as $model) { ?>
 <div class="flash-success">
@@ -165,5 +167,3 @@ $this->breadcrumbs=array(
 			<?php } ?>
 </div>
 <?php	} ?>
-
-<?php endif; ?>
