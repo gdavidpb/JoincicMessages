@@ -47,7 +47,7 @@
 						array(
 							'class' => 'bootstrap.widgets.TbMenu',
 							'encodeLabel' => false,
-							'items' =>array_merge(
+							'items' =>
 								 array(									
 									array(  
 											'label'=>Yii::t('general','Login'), 
