@@ -5,6 +5,12 @@
 
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
+
+
+$directory = dirname(__FILE__);
+
+Yii::setPathOfAlias('bootstrap', $directory.'/../extensions/bootstrap');
+
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Joincic Messages',
@@ -36,6 +42,14 @@ return array(
 					// enable cookie-based authentication
 					'allowAutoLogin'=>true,
 				),
+
+
+
+				'bootstrap' => array(
+				    'class' => 'ext.bootstrap.components.Bootstrap',
+				    'responsiveCss' => true,
+				),
+		
 				'urlManager'=>array(
 					'urlFormat'=>'path',
 					'rules'=>array(
