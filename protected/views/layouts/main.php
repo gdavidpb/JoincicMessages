@@ -33,7 +33,14 @@
 				<div id="logo"></div>
 				<h2 title="JORNADAS INTERUNIVERSITARIAS DE CIENCIAS DE LA COMPUTACIÓN">JORNADAS INTERUNIVERSITARIAS DE CIENCIAS DE LA COMPUTACIÓN</h2>
 			</center>
-			<div id="mainmenu">
+			
+			<div class="clear"></div>
+		</div>
+
+		
+	</div>
+<!-- ending header -->
+<div id="mainmenu">
 				<?php $this->widget('bootstrap.widgets.TbNavbar', array( 
 					'brand' => '',
 					'brandUrl' => false,
@@ -78,13 +85,6 @@
 					),
 				)); ?>
 			</div><!-- mainmenu -->
-			<div class="clear"></div>
-		</div>
-
-		
-	</div>
-<!-- ending header -->
-
 <div class="container" id="page">
 
 	<?php if(isset($this->breadcrumbs)):?>
