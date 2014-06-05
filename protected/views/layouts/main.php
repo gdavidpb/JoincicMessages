@@ -42,6 +42,12 @@
 <!-- ending header -->
 <div class="container" id="page">
   <div  class="row" id="mainmenu">
+			<?php if(isset($this->breadcrumbs)):?>
+				<?php $this->widget('zii.widgets.CBreadcrumbs', array(
+					'links'=>$this->breadcrumbs,
+				)); ?><!-- breadcrumbs -->
+			<?php endif?>
+
 				<?php $this->widget('bootstrap.widgets.TbNavbar', array( 
 					'brand' => '',
 					'brandUrl' => false,
@@ -88,12 +94,6 @@
 			</div><!-- mainmenu -->
 
 		<div  class="row" >
-
-			<?php if(isset($this->breadcrumbs)):?>
-				<?php $this->widget('zii.widgets.CBreadcrumbs', array(
-					'links'=>$this->breadcrumbs,
-				)); ?><!-- breadcrumbs -->
-			<?php endif?>
 
 			<?php echo $content; ?>
 
