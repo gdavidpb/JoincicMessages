@@ -34,8 +34,17 @@ class MessagesController extends Controller
 			'preffix' => '',
 		);
 		if(isset($_REQUEST['cedulas'])){
-			$cedulas = $_REQUEST['cedulas'];
+			$temp_cedulas = $_REQUEST['cedulas'];
 			$criteria = new CDbCriteria;
+			$cedulas = array();
+			foreach ($temp_cedulas as $ced) {
+				    if(trim($ced)){
+				    	$raws=preg_split('/[\s,]+/',$ced,-1,PREG_SPLIT_NO_EMPTY);
+				    	if(count($raws) > 0){
+				    		$cedulas = array_merge($cedulas,$raws);
+				    	}
+				    }
+			}
 			$criteria->addInCondition('cedula',$cedulas);
 			$model->models = Participantes::model()->findAll($criteria);
 			unset($_REQUEST['cedulas']);
@@ -62,7 +71,7 @@ class MessagesController extends Controller
 
 					mail($email,$subject,$model->log,$headers);
 					Yii::app()->user->setFlash('messages','Los Mensajes han sido enviados! Revise el correo '.Yii::app()->params['adminEmail'].' Para mayor informacion');
-					
+
 					$model->attributes = array(
 						'body' => '',
 					);

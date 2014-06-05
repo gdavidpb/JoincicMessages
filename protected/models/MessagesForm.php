@@ -20,7 +20,7 @@ class MessagesForm extends CFormModel
 
 	public $log;
 
-	public $messagesPerMinute = 10;
+	public $messagesPerMinute = 100;
 	public $minuteCount = 0;
 
 	public $verifyCode;
