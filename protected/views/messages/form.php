@@ -1,18 +1,18 @@
 <?php
 /* @var $this MessageController */
-/* @var $model MessagesForm */
+/* @var $model MensajesForm */
 /* @var $form CActiveForm */
 
-$this->pageTitle=Yii::app()->name . ' - Messages';
+$this->pageTitle=Yii::app()->name . ' - Mensajes';
 $this->breadcrumbs=array(
-	'Messages',
+	'Mensajes',
 );
 
 	Yii::app()->clientScript->registerCoreScript('jquery');
 
 ?>
 
-<h1>Messages</h1>
+<h1>Mensajes</h1>
 
 <?php if(Yii::app()->user->hasFlash('messages')): ?>
 
