@@ -40,7 +40,8 @@
 		
 	</div>
 <!-- ending header -->
-<div id="mainmenu">
+ 
+  <div  class="row" id="mainmenu">
 				<?php $this->widget('bootstrap.widgets.TbNavbar', array( 
 					'brand' => '',
 					'brandUrl' => false,
@@ -85,7 +86,8 @@
 					),
 				)); ?>
 			</div><!-- mainmenu -->
-<div class="container" id="page">
+
+<div  class="row container" id="page">
 
 	<?php if(isset($this->breadcrumbs)):?>
 		<?php $this->widget('zii.widgets.CBreadcrumbs', array(
