@@ -42,11 +42,6 @@
 <!-- ending header -->
 <div class="container" id="page">
   <div  class="row" id="mainmenu">
-			<?php if(isset($this->breadcrumbs)):?>
-				<?php $this->widget('zii.widgets.CBreadcrumbs', array(
-					'links'=>$this->breadcrumbs,
-				)); ?><!-- breadcrumbs -->
-			<?php endif?>
 
 				<?php $this->widget('bootstrap.widgets.TbNavbar', array( 
 					'brand' => '',
@@ -82,15 +77,15 @@
 									),
 									array('label'=>Yii::t('general','Logout').' ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 								),
-							'htmlOptions'=>array(
-								'class' => 'pull-right',
-							),
 					   )
 				    ),
-					'htmlOptions'=>array(
-						'class' => ' pull-right',
-					),
 				)); ?>
+				
+			<?php if(isset($this->breadcrumbs)):?>
+				<?php $this->widget('zii.widgets.CBreadcrumbs', array(
+					'links'=>$this->breadcrumbs,
+				)); ?><!-- breadcrumbs -->
+			<?php endif?>
 			</div><!-- mainmenu -->
 
 		<div  class="row" >
