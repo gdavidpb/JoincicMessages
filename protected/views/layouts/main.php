@@ -40,7 +40,7 @@
 		
 	</div>
 <!-- ending header -->
- 
+<div class="container" id="page">
   <div  class="row" id="mainmenu">
 				<?php $this->widget('bootstrap.widgets.TbNavbar', array( 
 					'brand' => '',
@@ -87,18 +87,19 @@
 				)); ?>
 			</div><!-- mainmenu -->
 
-<div  class="row container" id="page">
+		<div  class="row" >
 
-	<?php if(isset($this->breadcrumbs)):?>
-		<?php $this->widget('zii.widgets.CBreadcrumbs', array(
-			'links'=>$this->breadcrumbs,
-		)); ?><!-- breadcrumbs -->
-	<?php endif?>
+			<?php if(isset($this->breadcrumbs)):?>
+				<?php $this->widget('zii.widgets.CBreadcrumbs', array(
+					'links'=>$this->breadcrumbs,
+				)); ?><!-- breadcrumbs -->
+			<?php endif?>
 
-	<?php echo $content; ?>
+			<?php echo $content; ?>
 
-	<div class="clear"></div>
-</div><!-- page -->
+			<div class="clear"></div>
+		</div>
+		</div><!-- page -->
 
 		
 </body></html>
