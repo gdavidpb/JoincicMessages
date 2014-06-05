@@ -24,7 +24,7 @@ $this->breadcrumbs=array(
 
 
 
-<div class="form">
+<div class="form well">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'messages-form',
