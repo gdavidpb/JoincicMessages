@@ -1,4 +1,5 @@
 <?php
+use PHPImageWorkshop\ImageWorkshop;
 
 class SiteController extends Controller
 {
@@ -25,7 +26,6 @@ class SiteController extends Controller
 	public function actionCarnet($cedula)
 	{
 		Yii::import("imageWorkshop.ImageWorkshopComponent", true);
-		use PHPImageWorkshop\ImageWorkshop;
 
 			$dirPath = "./carnets/";
 
