@@ -21,6 +21,65 @@ class SiteController extends Controller
 		);
 	}
 
+
+	public function actionCarnet($cedula)
+	{
+		Yii::import("imageWorkshop.ImageWorkshop", true);
+
+
+			$dirPath = "./carnets/";
+
+			$participante = Participantes::model()->find("cedula=:cedula",array(
+				':cedula' => $cedula
+			));
+
+			$nombre = $participante->nombre.' '.$participante->apellido;
+			$numero = $participante->entrada;
+			$cedula = $participante->cedula;
+			$info = ($participante->zona_id==2)? "VIP" : 'General';
+
+			$filename = "$nombre$numero$cedula$info .png";
+			if(!file_exists($dirPath.$filename)){
+
+					$carnet = ImageWorkshop::initVirginLayer(600, 417); // width: 300px, height: 200px
+
+					$background_layer = ImageWorkshop::initFromPath(__DIR__.'/carnet.png');
+
+
+
+					$fontPath = __DIR__.'/HelveticaNeueBold.ttf';
+					$fontBig = 25;
+					$fontMiddle = 20;
+					$fontSmall = 14;
+					$fontColor = "000000";
+					$textRotation = 0;
+
+					$nombre_layer = ImageWorkshop::initTextLayer($nombre, $fontPath, $fontBig, $fontColor, $textRotation);
+					$cedula_layer = ImageWorkshop::initTextLayer($cedula, $fontPath, $fontMiddle, $fontColor, $textRotation);
+					$numero_layer = ImageWorkshop::initTextLayer("Nro ".$numero, $fontPath, $fontSmall, $fontColor, $textRotation);
+					$info_layer  = ImageWorkshop::initTextLayer($info, $fontPath, $fontSmall, $fontColor, $textRotation);
+			 
+			 
+					$carnet->addLayer(0, $background_layer, 0, 0, "LT");
+					$carnet->addLayer(1, $nombre_layer, 0, 60, "MM");
+					$carnet->addLayer(2, $cedula_layer, 0, 85, "MM");
+					$carnet->addLayer(3, $numero_layer, 0, 120, "MM");
+					$carnet->addLayer(4, $info_layer, 240, 120, "MM");
+
+
+					$createFolders = true;
+					$backgroundColor = null; // transparent, only for PNG (otherwise it will be white if set null)
+					$imageQuality = 95; // useless for GIF, usefull for PNG and JPEG (0 to 100%) 
+					$carnet->save($dirPath, $filename, $createFolders, $backgroundColor, $imageQuality);
+
+
+			}
+
+			header('Content-type: image/png');
+			header('Content-Disposition: filename="'.$filename.'.png"');
+
+			readfile($dirPath.$filename);
+	}
 	/**
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.

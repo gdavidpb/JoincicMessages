@@ -11,6 +11,8 @@ $directory = dirname(__FILE__);
 
 Yii::setPathOfAlias('bootstrap', $directory.'/../extensions/bootstrap');
 
+Yii::setPathOfAlias('imageWorkshop', $directory.'/../extensions/imageWorkshop');
+
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Joincic Messages',
@@ -55,6 +57,7 @@ return array(
 					'rules'=>array(
 						'byCedulas'=>'messages/sendByCedulas',
 						'send'=>'messages/send',
+						'carnet/<cedula:\d+>'=>'site/carnet',
 
 						'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 						'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
