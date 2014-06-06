@@ -75,9 +75,13 @@ class SiteController extends Controller
 
 			}
 
-			header('Content-type: image/png');
+			if(isset($_REQUEST['download'])){
+				header('Content-Type: application/octet-stream');
+				header("Content-Transfer-Encoding: Binary"); 
+			}else{
+				header('Content-type: image/png');
+			}
 			header('Content-Disposition: filename="'.$filename.'.png"');
-
 			readfile($dirPath.$filename);
 	}
 	/**
