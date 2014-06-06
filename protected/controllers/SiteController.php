@@ -24,7 +24,7 @@ class SiteController extends Controller
 
 	public function actionCarnet($cedula)
 	{
-		Yii::import("imageWorkshop.ImageWorkshop", true);
+		Yii::import("imageWorkshop.ImageWorkshopComponent", true);
 
 
 			$dirPath = "./carnets/";
