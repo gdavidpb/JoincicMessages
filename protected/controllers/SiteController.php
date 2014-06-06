@@ -43,7 +43,7 @@ class SiteController extends Controller
 
 					$carnet = ImageWorkshop::initVirginLayer(600, 417); // width: 300px, height: 200px
 
-					$background_layer = ImageWorkshop::initFromPath(__DIR__.'/carnet.png');
+					$background_layer = ImageWorkshop::initFromPath('./carnet.png');
 
 
 
