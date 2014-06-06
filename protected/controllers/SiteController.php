@@ -47,7 +47,7 @@ class SiteController extends Controller
 
 
 
-					$fontPath = __DIR__.'/HelveticaNeueBold.ttf';
+					$fontPath = './HelveticaNeueBold.ttf';
 					$fontBig = 25;
 					$fontMiddle = 20;
 					$fontSmall = 14;
