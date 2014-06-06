@@ -38,7 +38,7 @@ class SiteController extends Controller
 			$cedula = $participante->cedula;
 			$info = ($participante->zona_id==2)? "VIP" : 'General';
 
-			$filename = "$nombre$numero$cedula$info .png";
+			$filename = str_replace(" ", "_", "$nombre $numero $cedula $info.png");
 			if(!file_exists($dirPath.$filename)){
 
 					$carnet = ImageWorkshop::initVirginLayer(600, 417); // width: 300px, height: 200px
@@ -81,7 +81,7 @@ class SiteController extends Controller
 			}else{
 				header('Content-type: image/png');
 			}
-			header('Content-Disposition: filename="'.$filename.'.png"');
+			header('Content-Disposition: filename="'.$filename.'"');
 			readfile($dirPath.$filename);
 	}
 	/**
