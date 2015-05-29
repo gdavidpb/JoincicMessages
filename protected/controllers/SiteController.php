@@ -84,6 +84,73 @@ class SiteController extends Controller
 			header('Content-Disposition: filename="'.$filename.'"');
 			readfile($dirPath.$filename);
 	}
+
+	public function certificado($participante){
+
+
+			Yii::import("imageWorkshop.ImageWorkshopComponent", true);
+			$dirPath = "./certificados/";
+			$nombre = $participante->nombre.' '.$participante->apellido;
+			$numero = $participante->entrada;
+			$cedula = number_format($participante->cedula , 0, ',', '.');
+			$info = ($participante->zona_id==2)? "VIP" : 'General';
+
+			$filename = str_replace(" ", "_", "$nombre $numero $cedula $info.png");
+			if(!file_exists($dirPath.$filename)){
+
+					$carnet = ImageWorkshop::initVirginLayer(1600, 1236); // width: 300px, height: 200px
+
+					$background_layer = ImageWorkshop::initFromPath('./certificado.png');
+
+
+
+					$fontPath = './HelveticaNeueBold.ttf';
+					$fontBig = 30;
+					$fontMiddle = 20;
+					$fontSmall = 14;
+					$fontColor = "696967";
+					$textRotation = 0;
+
+					$nombre_layer = ImageWorkshop::initTextLayer($nombre. " C.I: ".$cedula, $fontPath, $fontBig, $fontColor, $textRotation);
+			 
+			 
+					$carnet->addLayer(0, $background_layer, 0, 0, "LT");
+					$carnet->addLayer(1, $nombre_layer, 0, -150, "MM");
+					$createFolders = true;
+					$backgroundColor = null; // transparent, only for PNG (otherwise it will be white if set null)
+					$imageQuality = 95; // useless for GIF, usefull for PNG and JPEG (0 to 100%) 
+					$carnet->save($dirPath, $filename, $createFolders, $backgroundColor, $imageQuality);
+
+			}
+			return $dirPath.$filename;
+	}
+
+	public function actionZipCertificados(){
+		$participantes = Participantes::model()->findAll();
+		$files = [];
+		foreach ($participantes as $participante) {
+			$files []= $this->certificado($participante);
+		}
+		zipFilesAndDownload($files,'Certificados.zip');
+
+	}
+
+	public function actionCertificado($cedula)
+	{
+
+			$participante = Participantes::model()->find("cedula=:cedula",array(
+				':cedula' => $cedula
+			));
+			$filepath = $this->certificado($participante);
+			if(isset($_REQUEST['download'])){
+				header('Content-Type: application/octet-stream');
+				header("Content-Transfer-Encoding: Binary"); 
+			}else{
+				header('Content-type: image/png');
+			}
+			header('Content-Disposition: filename="'.$filename.'"');
+			readfile($filepath);
+	}
 	/**
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.
