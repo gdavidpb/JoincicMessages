@@ -1,4 +1,7 @@
 <?php
+function stripAccents($stripAccents){
+  return strtr($stripAccents,'àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ','aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
+}
 function zipFilesAndDownload($file_names,$archive_file_name)
 {
         //echo $file_path;die;

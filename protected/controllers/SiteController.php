@@ -22,59 +22,102 @@ class SiteController extends Controller
 		);
 	}
 
+	public function _certificado($tipo, $nombre, $cedula){
+			$dirPath = "./certificados/";
+			Yii::import("imageWorkshop.ImageWorkshopComponent", true);
+			$filename = str_replace(" ", "_", "$tipo $nombre $cedula $tipo.png");			
+			$filename = stripAccents($filename);
+			if(!file_exists($dirPath.$filename) || filemtime($dirPath.$filename) + 300 < time() ){
+					$carnet = ImageWorkshop::initVirginLayer(1600, 1236); // width: 300px, height: 200px
+					$background_layer = ImageWorkshop::initFromPath('./certificado.png');
+					$fontPath = './arialbd.ttf';
+					$fontBig = 30;
+					$fontMiddle = 20;
+					$fontSmall = 14;
+					$fontColor = "696967";
+					$textRotation = 0;
+					if($nombre)
+						$nombre_layer = ImageWorkshop::initTextLayer($nombre, $fontPath, $fontBig, $fontColor, $textRotation);
+					if($tipo)
+						$tipo_layer = ImageWorkshop::initTextLayer($tipo, $fontPath, $fontBig, $fontColor, $textRotation); 			 
+					$carnet->addLayer(0, $background_layer, 0, 0, "LT");
+					if($nombre)
+						$carnet->addLayer(1, $nombre_layer, 0, -150, "MM");
+					if($tipo)
+						$carnet->addLayer(1, $tipo_layer, 0, 50, "MM");
+					$createFolders = true;
+					$backgroundColor = null; // transparent, only for PNG (otherwise it will be white if set null)
+					$imageQuality = 95; // useless for GIF, usefull for PNG and JPEG (0 to 100%) 
+					$carnet->save($dirPath, $filename, $createFolders, $backgroundColor, $imageQuality);
+			}
+			return $dirPath.$filename;
+	}
 
-	public function actionCarnet($cedula)
-	{
-		Yii::import("imageWorkshop.ImageWorkshopComponent", true);
+	public function _carnet($tipo, $nombre, $numero, $cedula, $info){
 
-			$dirPath = "./carnets/";
+			Yii::import("imageWorkshop.ImageWorkshopComponent", true);
+			$dirPath = "./carnets/";	
 
-			$participante = Participantes::model()->find("cedula=:cedula",array(
-				':cedula' => $cedula
-			));
-
-			$nombre = $participante->nombre.' '.$participante->apellido;
-			$numero = $participante->entrada;
-			$cedula = $participante->cedula;
-			$info = ($participante->zona_id==2)? "VIP" : 'General';
-
-			$filename = str_replace(" ", "_", "$nombre $numero $cedula $info.png");
-			if(!file_exists($dirPath.$filename)){
-
+			$filename = str_replace(" ", "_", "$tipo $nombre $numero $cedula $info.png");	
+			$filename = stripAccents($filename);
+			if(!file_exists($dirPath.$filename) || filemtime($dirPath.$filename) + 300 < time() ){
 					$carnet = ImageWorkshop::initVirginLayer(600, 417); // width: 300px, height: 200px
-
 					$background_layer = ImageWorkshop::initFromPath('./carnet.png');
-
-
-
 					$fontPath = './ARLRDBD.TTF';
+					$fontXBig = 35;
 					$fontBig = 25;
 					$fontMiddle = 20;
 					$fontSmall = 14;
 					$fontColor = "000000";
 					$textRotation = 0;
 
-					$nombre_layer = ImageWorkshop::initTextLayer($nombre, $fontPath, $fontBig, $fontColor, $textRotation);
-					$cedula_layer = ImageWorkshop::initTextLayer($cedula, $fontPath, $fontMiddle, $fontColor, $textRotation);
-					$numero_layer = ImageWorkshop::initTextLayer("Nro ".$numero, $fontPath, $fontSmall, $fontColor, $textRotation);
-					$info_layer  = ImageWorkshop::initTextLayer($info, $fontPath, $fontSmall, $fontColor, $textRotation);
-			 
-			 
+					if($tipo)
+						$tipo_layer = ImageWorkshop::initTextLayer($tipo, $fontPath, $fontXBig, $fontColor, $textRotation);
+					if($nombre)
+						$nombre_layer = ImageWorkshop::initTextLayer($nombre, $fontPath, $fontBig, $fontColor, $textRotation);
+					if($cedula)
+						$cedula_layer = ImageWorkshop::initTextLayer($cedula, $fontPath, $fontMiddle, $fontColor, $textRotation);
+					if($numero)
+						$numero_layer = ImageWorkshop::initTextLayer($numero, $fontPath, $fontSmall, $fontColor, $textRotation);
+					if($info)
+						$info_layer  = ImageWorkshop::initTextLayer($info, $fontPath, $fontSmall, $fontColor, $textRotation); 			 
 					$carnet->addLayer(0, $background_layer, 0, 0, "LT");
-					$carnet->addLayer(1, $nombre_layer, 0, 60, "MM");
-					$carnet->addLayer(2, $cedula_layer, 0, 85, "MM");
-					$carnet->addLayer(3, $numero_layer, 0, 120, "MM");
-					$carnet->addLayer(4, $info_layer, 240, 120, "MM");
-
-
+					if($tipo)
+						$carnet->addLayer(1, $tipo_layer, 0, 5, "MM");
+					if($nombre)
+						$carnet->addLayer(1, $nombre_layer, 0, 60, "MM");
+					if($cedula)
+						$carnet->addLayer(2, $cedula_layer, 0, 85, "MM");
+					if($numero)
+						$carnet->addLayer(3, $numero_layer, 0, 120, "MM");
+					if($info)
+						$carnet->addLayer(4, $info_layer, 240, 120, "MM");
 					$createFolders = true;
 					$backgroundColor = null; // transparent, only for PNG (otherwise it will be white if set null)
 					$imageQuality = 95; // useless for GIF, usefull for PNG and JPEG (0 to 100%) 
 					$carnet->save($dirPath, $filename, $createFolders, $backgroundColor, $imageQuality);
-
-
 			}
+			return $dirPath.$filename;
+	}
 
+	public function actionCarnetOrganizador($email)
+	{
+
+			$organizador = Organizadores::model()->find("correo=:email",array(
+				':email' => $email
+			));
+
+			$tipo = "";
+			if($organizador->coordinador)
+				$tipo .="Coordinador ";
+			$tipo .= $organizador->coordinacion;
+
+			$info = $organizador->institucion;
+			$nombre =  $organizador->nombre. " ".$organizador->apellido;
+			$cedula = false;
+			$numero = false;
+			$filename = str_replace(" ", "_", "$tipo $nombre $cedula.png");
+			$filepath = $this->_carnet($tipo, $nombre, $numero, $cedula, $info);
 			if(isset($_REQUEST['download'])){
 				header('Content-Type: application/octet-stream');
 				header("Content-Transfer-Encoding: Binary"); 
@@ -82,58 +125,40 @@ class SiteController extends Controller
 				header('Content-type: image/png');
 			}
 			header('Content-Disposition: filename="'.$filename.'"');
-			readfile($dirPath.$filename);
+			readfile($filepath);
 	}
 
-	public function certificado($participante){
-
-
-			Yii::import("imageWorkshop.ImageWorkshopComponent", true);
-			$dirPath = "./certificados/";
-			$nombre = $participante->nombre.' '.$participante->apellido;
-			$numero = $participante->entrada;
-			$cedula = number_format($participante->cedula , 0, ',', '.');
-			$info = ($participante->zona_id==2)? "VIP" : 'General';
-
-			$filename = str_replace(" ", "_", "$nombre $numero $cedula $info.png");
-			if(!file_exists($dirPath.$filename)){
-
-					$carnet = ImageWorkshop::initVirginLayer(1600, 1236); // width: 300px, height: 200px
-
-					$background_layer = ImageWorkshop::initFromPath('./certificado.png');
 
 
 
-					$fontPath = './HelveticaNeueBold.ttf';
-					$fontBig = 30;
-					$fontMiddle = 20;
-					$fontSmall = 14;
-					$fontColor = "696967";
-					$textRotation = 0;
+	public function actionCertificadoOrganizador($email)
+	{
 
-					$nombre_layer = ImageWorkshop::initTextLayer($nombre. " C.I: ".$cedula, $fontPath, $fontBig, $fontColor, $textRotation);
-			 
-			 
-					$carnet->addLayer(0, $background_layer, 0, 0, "LT");
-					$carnet->addLayer(1, $nombre_layer, 0, -150, "MM");
-					$createFolders = true;
-					$backgroundColor = null; // transparent, only for PNG (otherwise it will be white if set null)
-					$imageQuality = 95; // useless for GIF, usefull for PNG and JPEG (0 to 100%) 
-					$carnet->save($dirPath, $filename, $createFolders, $backgroundColor, $imageQuality);
+			$organizador = Organizadores::model()->find("correo=:email",array(
+				':email' => $email
+			));
 
+			$tipo = "";
+			if($organizador->coordinador)
+				$tipo .="Coordinador ";
+			$tipo .= $organizador->coordinacion;
+
+			$tipo .=" ".$organizador->institucion;
+			$nombre =  $organizador->nombre. " ".$organizador->apellido;
+			$cedula = false;
+
+			$filename = str_replace(" ", "_", "$tipo $nombre $cedula.png");
+			$filepath = $this->_certificado($tipo, $nombre, $cedula);
+			if(isset($_REQUEST['download'])){
+				header('Content-Type: application/octet-stream');
+				header("Content-Transfer-Encoding: Binary"); 
+			}else{
+				header('Content-type: image/png');
 			}
-			return $dirPath.$filename;
+			header('Content-Disposition: filename="'.$filename.'"');
+			readfile($filepath);
 	}
 
-	public function actionZipCertificados(){
-		$participantes = Participantes::model()->findAll();
-		$files = [];
-		foreach ($participantes as $participante) {
-			$files []= $this->certificado($participante);
-		}
-		zipFilesAndDownload($files,'Certificados.zip');
-
-	}
 
 	public function actionCertificado($cedula)
 	{
@@ -141,6 +166,13 @@ class SiteController extends Controller
 			$participante = Participantes::model()->find("cedula=:cedula",array(
 				':cedula' => $cedula
 			));
+
+			$nombre = $participante->nombre.' '.$participante->apellido;
+			$numero = $participante->entrada;
+			$cedula = number_format($participante->cedula , 0, ',', '.');
+			$info = ($participante->zona_id==2)? "VIP" : 'General';
+
+			$filename = str_replace(" ", "_", "$nombre $numero $cedula $info.png");
 			$filepath = $this->certificado($participante);
 			if(isset($_REQUEST['download'])){
 				header('Content-Type: application/octet-stream');
@@ -151,6 +183,61 @@ class SiteController extends Controller
 			header('Content-Disposition: filename="'.$filename.'"');
 			readfile($filepath);
 	}
+
+	public function actionCarnet($cedula)
+	{
+		Yii::import("imageWorkshop.ImageWorkshopComponent", true);
+
+
+			$participante = Participantes::model()->find("cedula=:cedula",array(
+				':cedula' => $cedula
+			));
+
+			$nombre = $participante->nombre.' '.$participante->apellido;
+			$numero = $participante->entrada;
+			$cedula = number_format($participante->cedula , 0, ',', '.');
+			$info = ($participante->zona_id==2)? "VIP" : 'General';
+
+			$filename = str_replace(" ", "_", "$nombre $numero $cedula $info.png");
+
+			$filepath = $this->carnet($participante);
+
+			if(isset($_REQUEST['download'])){
+				header('Content-Type: application/octet-stream');
+				header("Content-Transfer-Encoding: Binary"); 
+			}else{
+				header('Content-type: image/png');
+			}
+			header('Content-Disposition: filename="'.$filename.'"');
+			readfile($filepath);
+	}
+
+	public function certificado($participante){
+			$nombre = $participante->nombre.' '.$participante->apellido;
+			$numero = "Nro ".$participante->entrada;
+			$cedula = number_format($participante->cedula , 0, ',', '.');
+			$info = ($participante->zona_id==2)? "VIP" : 'General';
+			return $this->_certificado( "Participante", $nombre, $cedula);
+	}
+	public function carnet($participante){
+			$nombre = $participante->nombre.' '.$participante->apellido;
+			$numero = "Nro ".$participante->entrada;
+			$cedula = number_format($participante->cedula , 0, ',', '.');
+			$info = ($participante->zona_id==2)? "VIP" : 'General';
+			return $this->_carnet( "Participante", $nombre, $numero, $cedula, $info);
+	}
+
+
+	public function actionZipParticipantes(){
+		$participantes = Participantes::model()->findAll();
+		$files = [];
+		foreach ($participantes as $participante) {
+			$files []= $this->certificado($participante);
+			$files []= $this->carnet($participante);
+		}
+		zipFilesAndDownload($files,'Participantes.zip');
+	}
+
 	/**
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.

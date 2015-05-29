@@ -57,9 +57,12 @@ return array(
 					'rules'=>array(
 						'byCedulas'=>'messages/sendByCedulas',
 						'send'=>'messages/send',
-						'zip-certificados'=>'site/zipCertificados',
+						'zip-participantes'=>'site/zipParticipantes',
 						'carnet/<cedula:\d+>'=>'site/carnet',
 						'certificado/<cedula:\d+>'=>'site/certificado',
+
+						'carnet-organizador/<email:.+>'=>'site/carnetOrganizador',
+						'certificado-organizador/<email:.+>'=>'site/certificadoOrganizador',
 
 						'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 						'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
