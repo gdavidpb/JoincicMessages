@@ -2,32 +2,15 @@
 function stripAccents($stripAccents){
   return strtr($stripAccents,'àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ','aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
 }
-function zipFilesAndDownload($file_names,$archive_file_name)
+function zipFilesAndDownload($directory,$archive_file_name)
 {
+    /*
     if(file_exists($archive_file_name)){
         header("location: /$archive_file_name");
         exit;
-    }
-    
-    $zip = new ZipArchive();
-    
-    //create the file and throw the error if unsuccessful
-    if ($zip->open($archive_file_name, ZIPARCHIVE::CREATE )!==TRUE) {
-        exit("cannot open <$archive_file_name>\n");
-    }
-    //add each files of $file_name array to archive
-    foreach($file_names as $files)
-    {
-        if(!$zip->statName($files))
-            $zip->addFile($files,$files);
-        //echo $file_path.$files,$files."
-    }
-    $zip->close();
-    //then send the headers to foce download the zip file
-    /*header("Content-type: application/zip"); 
-    header("Content-Disposition: attachment; filename=$archive_file_name"); 
-    header("Pragma: no-cache"); 
-    header("Expires: 0"); */
+    }*/
+    shell_exec(" zip -r $archive_file_name $directory* ");
+
     header("location: /$archive_file_name");
     exit;
 }

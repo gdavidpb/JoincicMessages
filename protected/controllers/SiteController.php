@@ -22,19 +22,25 @@ class SiteController extends Controller
 		);
 	}
 
-	public function _certificado($tipo, $nombre, $cedula){
-			$dirPath = "./certificados/";
+	public function _certificado($tipo, $nombre, $cedula, $dirPath=false){
+
 			Yii::import("imageWorkshop.ImageWorkshopComponent", true);
-			$filename = str_replace(" ", "_", "$tipo $nombre $cedula $tipo.png");			
+
+			if($dirPath)
+				$dirPath .="certificados/";
+			else
+				$dirPath = "./certificados/";
+
+			$filename = str_replace(" ", "_", stripAccents($nombre)." $cedula $tipo.png");			
 			$filename = stripAccents($filename);
-			if(!file_exists($dirPath.$filename) || filemtime($dirPath.$filename) + 300 < time() ){
+			if(!file_exists($dirPath.$filename)){
 					$carnet = ImageWorkshop::initVirginLayer(1600, 1236); // width: 300px, height: 200px
 					$background_layer = ImageWorkshop::initFromPath('./certificado.png');
 					$fontPath = './arialbd.ttf';
 					$fontBig = 30;
 					$fontMiddle = 20;
 					$fontSmall = 14;
-					$fontColor = "696967";
+					$fontColor = "000000";
 					$textRotation = 0;
 					if($nombre)
 						$nombre_layer = ImageWorkshop::initTextLayer($nombre, $fontPath, $fontBig, $fontColor, $textRotation);
@@ -53,14 +59,18 @@ class SiteController extends Controller
 			return $dirPath.$filename;
 	}
 
-	public function _carnet($tipo, $nombre, $numero, $cedula, $info , $file = './carnet.png', $font = './ARLRDBD.TTF', $moveTop= 0 , $fontColor = "000000"){
+	public function _carnet($tipo, $nombre, $numero, $cedula, $info , $file = './carnet.png', $font = './ARLRDBD.TTF', $moveTop= 0 , $fontColor = "000000", $dirPath = false){
 
 			Yii::import("imageWorkshop.ImageWorkshopComponent", true);
-			$dirPath = "./carnets/";	
 
-			$filename = str_replace(" ", "_", "$tipo $nombre $numero $cedula $info.png");	
+			if($dirPath)
+				$dirPath .="carnets/";
+			else
+				$dirPath = "./carnets/";
+
+			$filename = str_replace(" ", "_", stripAccents($nombre)." $numero $cedula $info.png");	
 			$filename = stripAccents($filename);
-			if(!file_exists($dirPath.$filename) || filemtime($dirPath.$filename) + 300 < time() ){
+			if(!file_exists($dirPath.$filename)){
 					$carnet = ImageWorkshop::initVirginLayer(600, 417); // width: 300px, height: 200px
 					$background_layer = ImageWorkshop::initFromPath($file);
 					$fontPath = $font;
@@ -106,7 +116,7 @@ class SiteController extends Controller
 			$numero = "Nro ".$participante->entrada;
 			$cedula = number_format($participante->cedula , 0, ',', '.');
 			$info = ($participante->zona_id==2)? "VIP" : 'General';
-			return $this->_certificado( "Participante", $nombre, $cedula);
+			return $this->_certificado( "Participante", $nombre, $cedula, "./participantes_data/");
 	}
 	public function carnet($participante){
 			$nombre = $participante->nombre.' '.$participante->apellido;
@@ -114,7 +124,7 @@ class SiteController extends Controller
 			$cedula = number_format($participante->cedula , 0, ',', '.');
 			$info = ($participante->zona_id==2)? "VIP" : 'General';
 
-			return $this->_carnet( "", $nombre, $numero, $cedula, $info, "./carnet_participante.png", "./arialbd.ttf", -15 , "000000");
+			return $this->_carnet( "", $nombre, $numero, $cedula, $info, "./carnet_participante.png", "./arialbd.ttf", -15 , "000000", "./participantes_data/");
 	}
 
 	public function carnetOrganizador($organizador){
@@ -129,7 +139,7 @@ class SiteController extends Controller
 			$cedula = false;
 			$numero = false;
 			$filename = str_replace(" ", "_", "$tipo $nombre $cedula.png");
-			return $this->_carnet($tipo, $nombre, $numero, $cedula, $info, "./carnet_organizador.png", "./arialbd.ttf", 20 , "FFFFFF");
+			return $this->_carnet($tipo, $nombre, $numero, $cedula, $info, "./carnet_organizador.png", "./arialbd.ttf", 20 , "FFFFFF", "./organizadores_data/");
 	}
 
 	public function certificadoOrganizador($organizador){
@@ -144,7 +154,7 @@ class SiteController extends Controller
 
 			$filename = str_replace(" ", "_", "$tipo $nombre $cedula.png");
 
-			return  $this->_certificado($tipo, $nombre, $cedula);
+			return  $this->_certificado($tipo, $nombre, $cedula, "./organizadores_data/");
 	}
 
 	public function actionCarnetOrganizador($email)
@@ -262,37 +272,23 @@ class SiteController extends Controller
 
 
 	public function actionZipParticipantes(){
-
-		$filename = "Participantes.zip";
-	    if(file_exists($filename)){
-	        header("location: /$filename");
-	        exit;
-	    }
-    
-
 		$participantes = Participantes::model()->findAll();
 		$files = [];
 		foreach ($participantes as $participante) {
 			$files []= $this->certificado($participante);
 			$files []= $this->carnet($participante);
 		}
-		zipFilesAndDownload($files,$filename);
+		zipFilesAndDownload("./participantes_data/","Participantes.zip");
 	}
 
 	public function actionZipOrganizadores(){
-		$filename = "Organizadores.zip";
-	    if(file_exists($filename)){
-	        header("location: /$filename");
-	        exit;
-	    }
-    
 		$Organizadores = Organizadores::model()->findAll();
 		$files = [];
 		foreach ($Organizadores as $model) {
 			$files []= $this->certificadoOrganizador($model);
 			$files []= $this->carnetOrganizador($model);
 		}
-		zipFilesAndDownload($files,$filename);
+		zipFilesAndDownload("./organizadores_data/","Organizadores.zip");
 	}
 
 	/**
