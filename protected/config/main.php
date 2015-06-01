@@ -58,6 +58,7 @@ return array(
 						'byCedulas'=>'messages/sendByCedulas',
 						'send'=>'messages/send',
 						'zip-participantes'=>'site/zipParticipantes',
+						'zip-organizadores'=>'site/zipOrganizadores',
 						'carnet/<cedula:\d+>'=>'site/carnet',
 						'certificado/<cedula:\d+>'=>'site/certificado',
 
